@@ -155,10 +155,8 @@ matrix(0, nrow = 5, ncol = 4)
 matrix(1, nrow = 3, ncol = 2)
 ```
 
-Create an identity matrix
-```{r}
+# Create an identity matrix
 diag(nrow = 3)
-```
 
 There are other uses of diag()
 
@@ -265,3 +263,30 @@ identical(sum(diag(B)), sum(A^2))
 B <- returnMatrix(3,3)
 sum(diag(B)) # trace of B - TrB
 identical(sum(diag(t(B)%*%B)), sum(B^2))
+
+# inverse matrix
+# matrix A * inverse of matrix A = Identity matrix
+# solve() is built for this
+# a %*% x = b
+# to find the inverse of a matrix
+n <- 3
+A <- returnMatrix(n,n)
+B <- diag(n)
+solve(A,B)
+
+# Find the inverses of the matrices (5465) and (6343).
+
+solve(matrix(c(5,4,6,5), nrow = 2))
+solve(matrix(c(6,3,4,3), nrow = 2))
+
+# Prove that if A and B are same-sized invertible matrices, 
+# then (AB)^−1 = (B^−1)A^−1.
+n <- 4
+A <- returnMatrix(n,n)
+B <- returnMatrix(n,n)
+C <- round(solve(A %*% B))
+D <- round(solve(B) %*% solve(A))
+identical(C,D)
+# so it depends on precision!
+
+
