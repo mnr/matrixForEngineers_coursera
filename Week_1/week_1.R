@@ -287,6 +287,14 @@ B <- returnMatrix(n,n)
 C <- round(solve(A %*% B))
 D <- round(solve(B) %*% solve(A))
 identical(C,D)
-# so it depends on precision!
+# "identical" depends on precision!
 
-
+# Prove that if A is invertible then so is A^T, and (A^T)−1=(A−1)^T.
+A <- returnMatrix(4,5)
+solve(A) # error - must be square
+n <- 4
+A <- returnMatrix(n,n)
+solve(A) # That works
+solve(t(A)) # A^T is invertable
+t(solve(A))
+# again, identical depends on precision
