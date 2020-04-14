@@ -1,0 +1,153 @@
+---
+title: "Matrix Math Quick Reference"
+author: "Mark Niemann-Ross"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This Quick Reference is supplemental to courses on LinkedIn Learning
+
+An index to all R functions covered at LinkedIn Learning is found [here](http://niemannross.com/link/rindex)
+
+# Create a matrix
+
+```{r}
+matrix( c(1:9), nrow = 3)
+```
+
+# Addition
+```{r}
+A <- matrix( c(1:9), nrow = 3)
+B <- matrix( c(11:19), nrow = 3)
+A
+B
+A + B
+```
+
+# Multiplication - simple
+```{r}
+A * B
+```
+
+# Multiplication - "dot product"
+```{r}
+A %*% B
+```
+
+# Zero Matrix
+```{r}
+matrix(0, nrow = 3, ncol = 3)
+```
+
+# Identity Matrix
+```{r}
+I <- diag(3)
+I
+```
+
+# Diagonal Matrix
+```{r}
+diag(5, nrow = 3)
+```
+```{r}
+myMatrix <- A
+diag(myMatrix) <- 8
+myMatrix
+```
+
+# Upper and Lower Triangular
+```{r}
+upper.tri(A)
+upper.tri(A, diag = TRUE)
+lower.tri(A)
+```
+```{r}
+myMatrix <- A
+myMatrix[upper.tri(myMatrix)] <- NA
+myMatrix
+```
+
+# Matrix Comparison
+There are two ways to compare matrices. First, create two matrices for example comparison.
+```{r}
+partiallyA <- A
+partiallyA[upper.tri(partiallyA)] <- 1 # upper triangle becomes different
+```
+
+## simple matrice comparison, using equality
+```{r}
+
+A == partiallyA # returns logical value for each element
+```
+## object comparison for exact equality
+```{r}
+identical(partiallyA, A) # returns logical value for entire matrice comparison
+```
+```{r}
+identical(A,A) # compare two identical objects
+```
+
+# Matrix transposition
+```{r}
+NonSymmetricMatrix <- matrix(c(1:10), nrow = 5)
+NonSymmetricMatrix # show what it looks like
+t(NonSymmetricMatrix) # t() for transpose...show what transpose looks like
+```
+
+# Build a symmetric matrix
+There is a package for matrix tools. Here's how to do it with baseR
+```{r}
+A + t(A)
+```
+# Build a skew-symmetrix matrix
+```{r}
+A - t(A)
+```
+
+# Inner product of two vectors
+Simple dot-product ...aka $vec1^Tvec2$
+```{r}
+vec1 <- c(1:3)
+vec2 <- c(1:3)
+vec1 # what do these look like?
+vec2
+t(vec1) %*% vec2 # inner product
+
+```
+
+
+# Outer product of two vectors
+Transpose the second vector ... $vec1 vec2^T$
+```{r}
+
+vec1 %*% t(vec2) # the actual formula 
+outer(vec1, vec2) # the R function 
+vec1 %o% vec2 # %o% is a wrapper for outer()
+```
+# Inverse matrix
+$AA^-1 == I$ ... -1 is the inverse of a matrix. I is the identity matrix
+
+To be invertible:
+- matrix must be square
+- 
+
+
+`solve()` finds the inverse of a matrix
+
+```{r}
+
+solve(partiallyA)
+```
+Note: Some matrices return `Lapack routine dgesv: system is exactly singular: U[3,3] = 0`
+
+
+
+# to do
+crossprod()
+tcrossprod()
